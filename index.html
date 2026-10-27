@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Угадай число</title>
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: Arial, sans-serif;
+  color: white;
+  background: linear-gradient(135deg, #17152f, #542b85, #17152f);
+}
+.game {
+  width: 300px;
+  padding: 30px;
+  text-align: center;
+  background: #ffffff12;
+  border: 1px solid #ffffff35;
+  border-radius: 22px;
+  box-shadow: 0 15px 50px #0005;
+}
+h1 { color: #d7b5ff; }
+p { color: #ddd1f5; }
+input, button {
+  padding: 12px;
+  border: 0;
+  border-radius: 10px;
+  font-size: 16px;
+}
+input { width: 80px; }
+button {
+  color: white;
+  background: #9b59e8;
+  cursor: pointer;
+}
+button:hover { background: #bd7cff; }
+#result { min-height: 24px; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="game">
+  <h1>Угадай число</h1>
+  <p>Я загадал число от 1 до 10!</p>
+  <input id="number" type="number" min="1" max="10"
+         placeholder="Число">
+  <button onclick="check()">Проверить</button>
+  <p id="result">Попробуй угадать!</p>
+  <p>Попытки: <span id="tries">0</span></p>
+  <button onclick="restart()">Новая игра</button>
+</div>
+<script>
+let secret = Math.floor(Math.random() * 10) + 1;
+let tries = 0;
+function check() {
+  let guess = Number(document.getElementById("number").value);
+  let result = document.getElementById("result");
+  if (!Number.isInteger(guess) || guess < 1 || guess > 10) {
+    result.textContent = "Введи число от 1 до 10!";
+    return;
+  }
+  tries++;
+  document.getElementById("tries").textContent = tries;
+  if (guess === secret) {
+    result.textContent = "Ты угадал! Победа!";
+  } else if (guess < secret) {
+    result.textContent = "Моё число больше!";
+  } else {
+    result.textContent = "Моё число меньше!";
+  }
+}
+function restart() {
+  secret = Math.floor(Math.random() * 10) + 1;
+  tries = 0;
+  document.getElementById("tries").textContent = 0;
+  document.getElementById("number").value = "";
+  document.getElementById("result").textContent = "Новая игра началась!";
+}
+</script>
+</body>
+</html>
